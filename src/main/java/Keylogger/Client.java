@@ -33,8 +33,8 @@ public class Client implements NativeKeyListener {
 
         Handler[] handlers = Logger.getLogger("").getHandlers();
 
-        for (Handler handler : handlers) {
-            handler.setLevel(Level.OFF);
+        for (int i = 0; i < handlers.length; i++) {
+            handlers[i].setLevel(Level.OFF);
         }
 
         Client localClient = new Client();

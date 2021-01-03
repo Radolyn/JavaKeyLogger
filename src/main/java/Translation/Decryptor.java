@@ -84,9 +84,9 @@ public class Decryptor {
 
         ArrayList<String> s = new ArrayList<>();
 
-        for (String slice : slices) {
+        for (int i = 0; i < slices.length; i++) {
 
-            String[] add = slice.split(" ");
+            String[] add = slices[i].split(" ");
 
             for (int j = 0; j < add.length; j++) {
 
