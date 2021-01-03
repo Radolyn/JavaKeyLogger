@@ -65,7 +65,7 @@ public class Server {
     }
 
     public static String spaceAppending(String message) {
-        if (Decryptor.keys.contains(message)) {
+        if (Decryptor.keys.contains("[" + message + "]")) {
             message = " [" + message + "] ";
         }
 

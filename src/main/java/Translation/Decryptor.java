@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Decryptor {
-    public static Set<String> keys = Set.of("[alt]", "[tab]", "[shift]", "[escape]", "[backspace]", "[caps lock]", "[ctrl", "Win]", "[backslash]", "[up]", "[down]", "[right]", "[left]");
+    public static Set<String> keys = Set.of("[alt]", "[tab]", "[shift]", "[escape]", "[backspace]", "[caps lock]", "[ctrl]", "[Win]", "[backslash]", "[up]", "[down]", "[right]", "[left]");
 
     public static List<String> english = Arrays.asList("q w e r t y u i o p [ ] a s d f g h j k l ; ' z x c v b n m , .".split(" "));
     public static List<String> russian = Arrays.asList("й ц у к е н г ш щ з х ъ ф ы в а п р о л д ж э я ч с м и т ь б ю".split(" "));
