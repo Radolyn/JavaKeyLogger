@@ -1,23 +1,13 @@
 package test;
 
-import java.io.FileWriter;
+import java.awt.im.InputContext;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Test {
-    public static void main(String[] args) {
-        try(FileWriter writer = new FileWriter("test.txt", false))
-        {
-            for(int i = 0; i < 5; i++){
-                String text = "Hello!";
-                writer.write(text);
-                writer.write("\n");
-            }
-
-            writer.flush();
-        }
-        catch(IOException ex){
-
-            System.out.println(ex.getMessage());
-        }
+    public static void main(String[] args){
+        String str = "привет";
+        String[] list = str.split("");
+        System.out.println(Arrays.toString(list));
     }
 }

