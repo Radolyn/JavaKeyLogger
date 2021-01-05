@@ -19,12 +19,12 @@ public class Client implements NativeKeyListener {
 
     public static void main(String[] args) throws IOException {
         try {
-            GlobalScreen.registerNativeHook();// позволяет обнаружить нажатие клавиши
+            GlobalScreen.registerNativeHook(); // позволяет обнаружить нажатие клавиши
         } catch (NativeHookException ex) {
             System.err.println("There was a problem registering the native hook.");
             System.err.println(ex.getMessage());
 
-            System.exit(1);// выход из программы если есть ВОЗМОЖНЫЕ нежелательные ошибки
+            System.exit(1); // выход из программы если есть ВОЗМОЖНЫЕ нежелательные ошибки
         }
 
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
@@ -61,7 +61,6 @@ public class Client implements NativeKeyListener {
     }
 
     public void go() throws IOException {
-//        client = new Socket("192.168.1.68", 5000);
         client = new Socket("127.0.0.1", 5000);
         writer = new PrintWriter(client.getOutputStream());
     }
