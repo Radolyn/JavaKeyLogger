@@ -55,4 +55,3 @@ public class Client implements NativeKeyListener {
         writer = new PrintWriter(client.getOutputStream());
     }
 }
-

